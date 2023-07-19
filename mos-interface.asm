@@ -14,6 +14,7 @@
 ; 08/06/2023:		Added _mos_fread, _mos_fwrite, _mos_flseek, _mos_del, _mos_ren
 	.include "mos_api.inc"
 
+	XDEF _putch
 	XDEF _getch
 	XDEF _waitvblank
 	XDEF _mos_fopen
@@ -38,6 +39,15 @@
 	segment CODE
 	.assume ADL=1
 	
+_putch:
+	push ix
+	ld ix,0
+	add ix,sp
+	ld a,(ix+6)
+	rst.lil 10h
+	pop ix
+	ret
+
 _getch:
 	push ix
 	ld a, mos_sysvars			; MOS Call for mos_sysvars

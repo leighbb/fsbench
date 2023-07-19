@@ -30,18 +30,6 @@ static const char *test_fn = "TEST.DAT";
 static const char crlf[2] = { '\r', '\n' };
 static char buffer[TEST_BLOCK_SIZE];
 
-// separate putch function that doesn't rely on a running MOS firmware
-// UART0 initialization done by MOS firmware previously
-// This utility doesn't run without MOS to load it anyway
-int putch(int c)
-{
-	UINT8 lsr,temt;
-	
-	while((UART0_LSR & 0x40) == 0);
-	UART0_THR = c;
-	return c;
-}
-
 void init_seed(void)
 {
 	DWORD t_start = getsysvar_time();
